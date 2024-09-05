@@ -1,6 +1,6 @@
 name: Deploy to Virtual Machine
 
-on: [workflow_dispatch]
+on: [push]
 
 jobs:
   deploy_to_staging:
