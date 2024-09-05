@@ -17,9 +17,9 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.SSH_PORT }}
-        source: "*"
+        source: "minio,mlflow,docker-compose.yml"
         target: ~/infrastructure/
-        strip_components: 1
+        strip_components: 2
 
     - name: Run MLFlow
       uses: appleboy/ssh-action@v1.0.3
