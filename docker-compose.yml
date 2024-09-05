@@ -25,15 +25,9 @@ services:
     depends_on:
       minio:
         condition: service_healthy
-    entrypoint: >
-      bash -c "
-      mc alias set minio http://minio:9000 ${MINIO_USER} ${MINIO_PASSWORD} &&
-      if ! mc ls minio | grep --quiet bucket; then
-        mc mb minio/mlflow
-      else
-        echo 'Bucket mlflow already exists'
-      fi
-      "
+    command: >
+      mc alias set minio http://minio:9000 ${MINIO_USER} ${MINIO_PASSWORD}
+      mc mb --ignore-existing minio/mlflow
 
   postgres:
     image: postgres:latest
@@ -42,7 +36,7 @@ services:
       - "5432:5432"
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTRGRES_PASSWORD}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=mlflow
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -59,6 +53,8 @@ services:
       - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
       - AWS_ACCESS_KEY_ID=${MINIO_USER}
       - AWS_SECRET_ACCESS_KEY=${MINIO_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     command: >
       mlflow server
       --host 0.0.0.0

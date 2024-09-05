@@ -19,7 +19,6 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         source: "minio,mlflow,docker-compose.yml"
         target: ~/infrastructure/
-        strip_components: 2
 
     - name: Run MLFlow
       uses: appleboy/ssh-action@v1.0.3
@@ -27,12 +26,12 @@ jobs:
         MINIO_USER: ${{ secrets.MINIO_USER }}
         MINIO_PASSWORD: ${{ secrets.MINIO_PASSWORD }}
         POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-        POSTRGRES_PASSWORD: ${{ secrets.POSTRGRES_PASSWORD }}
+        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       with:
         host: ${{ secrets.SSH_HOSTNAME }}
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.SSH_PORT }}
-        envs: MINIO_USER,MINIO_PASSWORD,POSTGRES_USER,POSTRGRES_PASSWORD
+        envs: MINIO_USER,MINIO_PASSWORD,POSTGRES_USER,POSTGRES_PASSWORD
         script: |
-          docker compose -f infrastructure/docker-compose.yaml up -d
+          docker compose -f infrastructure/docker-compose.yml up -d
