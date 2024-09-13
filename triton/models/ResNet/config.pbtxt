@@ -1,0 +1,25 @@
+name: "ResNet"
+platform: "onnxruntime_onnx"
+max_batch_size: 0
+
+instance_group [
+    {
+        kind: KIND_GPU
+    }
+]
+
+input [
+    {
+        name: "l_x_"
+        data_type: TYPE_FP32
+        dims: [ 1, 2, 320, 320 ]
+    }
+]
+
+output [
+    {
+        name: "fc_1"
+        data_type: TYPE_FP32
+        dims: [ 1, 2 ]
+    }
+]
