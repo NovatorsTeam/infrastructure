@@ -47,3 +47,9 @@ docker compose -f infrastructure/docker-compose.yml up -d
     ```
 
 Далее тритон-сервер доступен по 8000 порту для HTTP запросов.
+
+## Авторы
+
+Студенты AITH:
+- Mokeev Pavel (pav3l.mokeev@gmail.com)
+- Alexey Laletin (alex.klark.laletin@yandex.com)
